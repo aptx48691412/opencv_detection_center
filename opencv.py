@@ -23,7 +23,9 @@ while(True):
 
 
     # 輪郭を見つける
-    contours, hierarchy = cv2.findContours(thresh, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
+    contours, hierarchy = cv2.findContours(thresh.copy(), cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
+    #size = 2000
+    #list_extracted_contours = extract_contours(contours, size)
     cv2.imshow('frame', thresh)
    
     key=cv2.waitKey(1)
