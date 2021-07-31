@@ -36,7 +36,7 @@ while True:
     else:
         continue
 
-
+#
     contours_moments=cv2.moments(contours_max)
     x,y= int(contours_moments["m10"]/contours_moments["m00"]) , int(contours_moments["m01"]/contours_moments["m00"])
     
