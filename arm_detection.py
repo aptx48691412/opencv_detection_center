@@ -1,4 +1,5 @@
 import cv2
+
 cap=cv2.VideoCapture(0)
 avg=None
 #img=cv2.imread(r'/Users/yamauchisachiyo/Desktop/Lenna.png',cv2.IMREAD_GRAYSCALE)
