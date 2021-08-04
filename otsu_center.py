@@ -59,15 +59,27 @@ while True:
                   'Gaussian filtered Image','Histogram',"Otsu's Thresholding",
                   "Otsu's Thresholding",'Histogram',"Otsu's Thresholding",
                   "Otsu's Thresholding",'Histogram',"Otsu's Thresholding"]
+        
+        fig,axis=plt.subplots(4,3)
+  
 
         for i in range(4):
-            plt.subplot(4,3,i*3+1),plt.imshow(images[i*3],'gray')
-            plt.title(titles[i*3]), plt.xticks([]), plt.yticks([])
-            plt.subplot(4,3,i*3+2),plt.hist(images[i*3].ravel(),256)
-            plt.title(titles[i*3+1]), plt.xticks([]), plt.yticks([])
-            plt.subplot(4,3,i*3+3),plt.imshow(images[i*3+2],'gray')
-            plt.title(titles[i*3+2]), plt.xticks([]), plt.yticks([])
-            plt.show()
+            axis[i,0].imshow(images[i*3],'gray')
+            #axis[i,0].title(titles[i*3])
+            #axis[i,0].xticks([])
+            #axis[i,0].yticks([])
+            #plt.subplot(4,3,i*3+2)
+            axis[i,1].hist(images[i*3].ravel(),256)
+            #axis[i,1].title(titles[i*3+1])
+            #axis[i,1].xticks([])
+            #axis[i,1].yticks([])
+            #plt.subplot(4,3,i*3+3)
+            axis[i,2].imshow(images[i*3+2],'gray')
+            #axis[i,2].title(titles[i*3+2])
+            #axis[i,2].xticks([])
+            #axis[i,2].yticks([])
+        plt.figure()
+        plt.show()
         
 
 
