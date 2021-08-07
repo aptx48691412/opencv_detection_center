@@ -165,8 +165,7 @@ while True:
 
     if key==ord('h'):
         # global thresholding
-        # ret1,th1 = cv2.threshold(img,127,255,cv2.THRESH_BINARY)
-
+        # ret1,th1 = cv2.threshold(img,127,255,cv2.THRESH_BINARY
         # Otsu's thresholding
         print(getCenter(threshold))
 
