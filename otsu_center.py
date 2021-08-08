@@ -1,10 +1,11 @@
 import numpy as np
 import cv2
 from matplotlib import pyplot as plt
-from numpy.core.defchararray import index
+#from numpy.core.defchararray import index
 
 cap=cv2.VideoCapture(0)
-
+center_list=list()
+fps_list=list()
 index=0
 
 def getCenter(binimg):
@@ -35,9 +36,12 @@ while True:
         ret,threshold=cv2.threshold(absdiff,0,255,cv2.THRESH_OTSU)
         
         center=getCenter(threshold)
+        center_list.append(center)
+        fps_list.append(cap.get(cv2.CAP_PROP_FPS))
         #cv2.imshow('Frame',threshold)
         cv2.circle(frame,center,20,[34,255,34],40,20)
         cv2.circle(exact_gray,center,20,[34,255,34],40,20)
+        
         cv2.circle(threshold,center,5,[34,255,34],40,20)
         
         cv2.imshow('Frame',frame)
@@ -125,6 +129,12 @@ while True:
 
 
         plt.show()
+
+    if key==ord('j'):
+        print(center_list)
+        print(np.average([i[0] for i in center_list]))
+
+
     if key==ord('e'):
         fig=plt.figure()
         #ax1=fig.add_subplot(1,2,1)
@@ -136,12 +146,25 @@ while True:
         fig.savefig('threshold.png')
         plt.show()
         list__=np.where(threshold==255)
-        print(list__)
+        #print(list__)
+        #print(center[1])
+        v_list=list()
+        for ii,i in enumerate(center_list):
+            if ii==0:
+                v_list.append(0)
+                kkk=i
+            else:
+                v_list.append(abs(i[0]-kkk[0]))
+                kkk=i
 
-        fig=plt.figure()
-        plt.hist(threshold.ravel(),bins=128)
-        fig.savefig('threshold_hist.png')
-        plt.show()
+        print(v_list)
+        print('-----------------')        
+        print(np.average(v_list)/np.average(fps_list))
+        
+        #fig=plt.figure()
+        #plt.hist(threshold.ravel(),bins=128)
+        #fig.savefig('threshold_hist.png')
+        #plt.show()
 
         #fig.savefig('threshold_new.png')
 
@@ -165,7 +188,8 @@ while True:
 
     if key==ord('h'):
         # global thresholding
-        # ret1,th1 = cv2.threshold(img,127,255,cv2.THRESH_BINARY
+        # ret1,th1 = cv2.threshold(img,127,255,cv2.THRESH_BINARY)
+
         # Otsu's thresholding
         print(getCenter(threshold))
 
