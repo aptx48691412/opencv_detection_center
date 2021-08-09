@@ -1,9 +1,10 @@
 import numpy as np
 import cv2
 from matplotlib import pyplot as plt
-#from numpy.core.defchararray import index
+from numpy.core.defchararray import index
 
 cap=cv2.VideoCapture(0)
+print(cap.get(cv2.CAP_PROP_FPS))
 center_list=list()
 fps_list=list()
 index=0
@@ -45,6 +46,7 @@ while True:
         cv2.circle(threshold,center,5,[34,255,34],40,20)
         
         cv2.imshow('Frame',frame)
+        print(cap.get(cv2.CAP_PROP_FPS))
         
         #cv2.imshow('threshold',threshold)
 
@@ -79,6 +81,18 @@ while True:
         #plt.hist(np.array([1,2,1,1,1,2,2,2,2,2]),bins=67)
         plt.show()
         
+
+    if key==ord('w'):
+        #cv2.imshow('threshold',threshold)
+        #for i in center_list:
+
+        #y,x=getCenter(threshold==255)
+        
+        fig=plt.figure()
+        axis=fig.add_subplot(1,2,1)
+        axis.imshow('aaaaa',threshold)
+        plt.title(threshold.shape)
+        plt.show()
 
 
 
@@ -142,14 +156,17 @@ while True:
         #ax1.imshow(threshold,cmap='gray')
         #ax2.hist(threshold,bins=128)
         plt.imshow(threshold,cmap='gray')
-        plt.xlabel('the placement of center is  {} '.format(center))
-        fig.savefig('threshold.png')
+        plt.xlabel('the placement of center is  {} {}'.format(center,ret))
+        #plt.title(ret)
+
+        #fig.savefig('threshold.png')
         plt.show()
         list__=np.where(threshold==255)
         #print(list__)
         #print(center[1])
         v_list=list()
         for ii,i in enumerate(center_list):
+            
             if ii==0:
                 v_list.append(0)
                 kkk=i
@@ -160,13 +177,18 @@ while True:
         print(v_list)
         print('-----------------')        
         print(np.average(v_list)/np.average(fps_list))
-        
+
         #fig=plt.figure()
         #plt.hist(threshold.ravel(),bins=128)
         #fig.savefig('threshold_hist.png')
         #plt.show()
 
         #fig.savefig('threshold_new.png')
+
+
+    if key==ord('n'):
+        print(np.average(fps_list))
+        print('ytdkflcv')
 
     if key==ord('m'):
         #img_=cv2.imread('threshold.png')
@@ -175,6 +197,7 @@ while True:
         cv2.imshow('img_',threshold)
         plt.show()
         print(threshold.shape)
+        print(np.average(fps_list))
 
 
 
@@ -193,10 +216,10 @@ while True:
         # Otsu's thresholding
         print(getCenter(threshold))
 
-        ret2,th2 = cv2.threshold(diff,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
+        ret2,th2 = cv2.threshold(absdiff,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
 
         # Otsu's thresholding after Gaussian filtering
-        blur = cv2.GaussianBlur(diff,(5,5),0)
+        blur = cv2.GaussianBlur(absdiff,(5,5),0)
         ret3,th3 = cv2.threshold(blur,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
 
         # plot all the images and their histograms
@@ -204,7 +227,7 @@ while True:
                   blur, 0, th3,
                   th2, 0, th2,
                   th3, 0, th3,
-                  diff,0,threshold]
+                  absdiff,0,threshold]
         titles = ['Original Noisy Image','Histogram',"Otsu's Thresholding",
                   'Gaussian filtered Image','Histogram',"Otsu's Thresholding",
                   "Otsu's Thresholding",'Histogram',"Otsu's Thresholding",
@@ -232,10 +255,10 @@ while True:
         plt.tight_layout()
         #fig=plt.figure()
         #fig.savefig('arm_hist.png')
-        #cv2.circle(diff,getCenter(threshold))
+        #cv2.circle(absdiff,getCenter(threshold))
         print(images[4*3])
         print(images[4*3].shape)
-        print(diff.shape)
+        print(absdiff.shape)
 
         plt.show()
         
