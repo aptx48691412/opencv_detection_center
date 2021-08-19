@@ -4,7 +4,7 @@ from matplotlib import pyplot as plt
 from numpy.core.defchararray import index
 
 cap=cv2.VideoCapture(0)
-print(cap.get(cv2.CAP_PROP_FPS))
+#print(cap.get(cv2.CAP_PROP_FPS))
 center_list=list()
 fps_list=list()
 index=0
@@ -20,6 +20,7 @@ while True:
     ret,frame=cap.read()
     gray=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
     exact_gray=cv2.morphologyEx(gray, cv2.MORPH_CLOSE, np.ones((20, 20), np.uint8))
+    
     #ret,threshold=cv2.threshold(gray,0,255,cv2.THRESH_OTSU)
     #ret,threshold=cv2.threshold(gray,0,255,cv2.THRESH_BINARY)
     #ret,frame=cv2.threshold(gray,0,255,cv2.THRESH_BINARY)
@@ -32,10 +33,15 @@ while True:
         index+=1
 
     elif index>20:
-        cv2.accumulateWeighted(exact_gray,first_frame,0.3)
+        #cv2.accumulateWeighted(exact_gray,first_frame,0.2)
         absdiff=cv2.absdiff(exact_gray,cv2.convertScaleAbs(first_frame))
         ret,threshold=cv2.threshold(absdiff,0,255,cv2.THRESH_OTSU)
+        #ret,frame=cv2.threshold(gray,0,255,cv2.THRESH_OTSU)
+        #gray=cv2.cvtColor(frame,cv2.COLOR_THREDH_OTSU)
+
+        #cv2.imshow('frame',frame)
         
+
         center=getCenter(threshold)
         center_list.append(center)
         fps_list.append(cap.get(cv2.CAP_PROP_FPS))
@@ -45,8 +51,8 @@ while True:
         
         cv2.circle(threshold,center,5,[34,255,34],40,20)
         
-        cv2.imshow('Frame',frame)
-        print(cap.get(cv2.CAP_PROP_FPS))
+        cv2.imshow('Frame',threshold)
+        #print(cap.get(cv2.CAP_PROP_FPS))
         
         #cv2.imshow('threshold',threshold)
 
