@@ -120,9 +120,10 @@ while True:
     elif key==ord('e'):
         #frame=extraction_img('https://auctions.c.yimg.jp/images.auctions.yahoo.co.jp/image/dr000/auc0508/users/c1723af7f6ed08ebaba9b214afefb52400b60341/i-img900x1200-1565502088o5ro2g914284.jpg')
         
+        center_list=list()
+        ret_e_list=list()
+        
         while True:
-            center_list=list()
-            ret_e_list=list()
             ret_e,frame_e=cap.read()
             ret_e_list.append(ret_e)
         
