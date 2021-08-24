@@ -64,6 +64,12 @@ def hsv_center():
 
 
 def hsv_inRange(first):
+    fps = int(cap.get(cv2.CAP_PROP_FPS))                    # カメラのFPSを取得
+    w = int(cap.get(3))              # カメラの横幅を取得
+    h = int(cap.get(4))             # カメラの縦幅を取得
+    fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')        # 動画保存時のfourcc設定（mp4用）
+    video = cv2.VideoWriter('/Users/yamauchisachiyo/Downloads/opencv_detection_center-main/video.xmp4', fourcc, fps, (w, h),isColor=False)
+        
     center_list=list()
     while True:
         ret_,frame=cap.read()
@@ -84,6 +90,7 @@ def hsv_inRange(first):
         cv2.imshow('frame',threshold_g)
         #cv2.imwrite('scscs.png',bitwise_g)
 
+        video.write(threshold_g)
         key=cv2.waitKey(1)
 
         if key==ord('x'):
